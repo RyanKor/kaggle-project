@@ -1,13 +1,21 @@
+
+
 # Kaggle : House Prices - Advanced Regression Techniques
 
 ![image](https://user-images.githubusercontent.com/40455392/147349209-5beee79d-155f-4e20-aa52-e95fe7d5c553.png)
+
+
+
+![image](https://user-images.githubusercontent.com/40455392/147377015-49b9b6b5-0944-4781-a5e4-f9c55329e6f4.png)
+
+
 
 ![image](https://user-images.githubusercontent.com/40455392/147350590-241e43da-c8c0-48b9-8351-7cfcf8d51f75.png)
 
 - 프로젝트 링크 : [link](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/leaderboard)
 - 내 코드 링크 : [link](https://www.kaggle.com/seungtaekim/house-price-advanced-regression)
 
-
+- 목표 점수 : 0.1 대까지 스코어 높이기
 
 ## 1. 프로젝트 개요
 
@@ -31,13 +39,20 @@ Practice Skills
 
 - Feature가 81개나 되기 때문에 Target 데이터인 `SalePrice`와 높은 상관 관계를 갖는 데이터를 추리기 위해 Heap Map 그래프를 사용했습니다.
 
-![image](https://user-images.githubusercontent.com/40455392/147349617-4c2bdfff-ff69-4bfd-bc62-985d3fa3e6c0.png)
+![image](https://user-images.githubusercontent.com/40455392/147377027-cc14b623-ae0c-4aa6-8a3f-cd752954269d.png)
 
 - 위 상관 관계를 보면 약 11개 정도의 Feature들만 직접적으로 판매 가격과 연관성이 높은 것을 볼 수 있었고, 모델 훈련 시에 사용했습니다.
-
+- 2021.12.25일에 몇 몇 객체 타입의 칼럼의 인코딩 후, 결과를 확인해보니 총 22개의 Feature만 직접적으로 SalePrice와 연관이 있었습니다.
 - 그러나 이 데이터에서 Integer, Float 타입의 정보만 추출해올 수 있을 뿐, Object 타입의 데이터는 반영이 안되어 있기 때문에 추후에 정수형으로 인코딩을 진행해 상관 관계를 업데이트할 예정입니다.
-
 - 의미 있는 Feature를 하나하나 분류하는 것은 정말 어려운 일입니다. 하지만, Heap Map을 적절하게 사용하면, Feature Engineering을 하는 것에 많은 시간을 절약할 수 있습니다.
+
+```python
+# SalePrice의 important feature로 관측된 22개의 Feautre (점수 분포도 0.3 이상의 칼럼들)
+feature_columns = ["OpenPorchSF", "2ndFlrSF", "WoodDeckSF", "LotFrontage", "Foundation", 
+                   "BsmtFinSF1", "HeatingQC", "Fireplaces", "MasVnrArea", "GarageYrBlt", "YearRemodAdd", 
+                   "YearBuilt", "TotRmsAbvGrd", "FullBath", "KitchenQual", "1stFlrSF", "TotalBsmtSF",
+                   "GarageArea", "ExterQual", "GarageCars", "GrLivArea", "OverallQual"]
+```
 
 
 
@@ -50,6 +65,77 @@ xg_reg = xgb.XGBRegressor(objective ='reg:linear',colsample_bytree = 0.4603, lea
                                  random_state= 7, ntrhead = -1)
 xg_reg.fit(x_train,y_train)
 ```
+
+```
+set 1 -> 2nd best score
+learning_rate=0.01,n_estimators=3460,
+                                     max_depth=3, min_child_weight=0,
+                                     gamma=0, subsample=0.7,
+                                     colsample_bytree=0.7,
+                                     objective='reg:linear', nthread=-1,
+                                     scale_pos_weight=1, seed=27,
+                                     reg_alpha=0.00006
+
+set 2
+objective ='reg:linear',colsample_bytree = 0.4603, learning_rate = 0.06, min_child_weight = 1.8,
+                                 max_depth= 3, subsample = 0.52, n_estimators = 2000,
+                                 random_state= 7, ntrhead = -1
+
+set 3
+ colsample_bytree=0.1,   #ratio_of_constructing_each_tree
+ gamma=0.0,              #loss_reduction_param
+ learning_rate=0.01,     #for_updating_param
+ max_depth=3,            #maximum_depth_of_tree
+ min_child_weight=0,     #minimum_sum_of_child_weight
+ n_estimators=10000,     #total_no_of_iterations                                                                   
+ reg_alpha=0.0006,       #updating_coefficient_L1_regularization_term
+ reg_lambda=0.6,         #updating_coefficient_L2_regularization_term
+ subsample=0.7,          #sampling_training_data_randomly
+ seed=30,                #random_number_seed
+ silent=1
+
+
+set 4
+colsample_bytree=0.2,
+gamma=0.0,
+learning_rate=0.01,
+max_depth=4,
+min_child_weight=1.5,
+n_estimators=7200,                                                                  
+reg_alpha=0.9,
+reg_lambda=0.6,
+subsample=0.2,
+seed=42,
+silent=1
+
+
+set 5 -> current best score
+
+objective = 'reg:squarederror',
+        colsample_bytree = 0.5,
+        learning_rate = 0.05,
+        max_depth = 6,
+        min_child_weight = 1,
+        n_estimators = 1000,
+        subsample = 0.7
+
+set 6
+learning_rate=0.01,
+n_estimators=6000,
+max_depth=4,
+min_child_weight=0,
+gamma=0.6,
+subsample=0.7,
+colsample_bytree=0.7,
+objective='reg:linear',
+nthread=-1,
+scale_pos_weight=1,
+seed=27,
+reg_alpha=0.00006,
+random_state=42
+```
+
+
 
 - 사용한 값은 위와 같으며, 각 파라미터별 설명은 아래와 같습니다.
 
@@ -78,12 +164,14 @@ gamma : 감마는 의사 정규화 매개 변수 (라그랑주 승수)이며 다
 - XGBoost의 장점은 회귀 및 분류 모델 모두에 좋은 성능을 가지고 있다는 것이고, L1 & L2 규제를 모두 사용하는 것이 가능합니다.
 - 아직 앙상블 기법을 사용해 본 것은 아니지만, 앙상블 기법에도 XGBoost를 많이 사용한다고 하니, 다음 프로젝트에서는 앙상블과 함께 XGBoost를 사용해봐야겠습니다.
 
-
+- 단순 선형회귀 조건보다 `reg:squarederror`를 사용했을 때 더 학습 효과가 좋았습니다.
 
 ## 4. 의의
 
 - 이제 XGBoost 모듈은 충분히 사용해봤으니, 이 프로젝트에서 상위 1%에 들었던 사람들의 코드를 보면서 다른 사람들이 더 많이 쓰는 모델은 또 무엇이 있는지 탐색해봐야 합니다.
 - 기본 프로젝트지만, 타인의 프로젝트 코드를 참고하지 않았습니다. 온전히 제 스스로 처음부터 끝까지 빌드했으며, 심장 질환 예측 프로젝트 덕분에 점진적 개선 방법을 이해하고 받아들이는 과정이 즐거웠습니다.
+  - Object 타입의 데이터 칼럼을 변환해 모델 학습을 하니, 학습 효과가 조금 더 개선되었습니다.
+  - 상관계수 값이 0.5 이상만 되는 칼럼만을 대상으로 학습 시, 되려 XGBoost를 사용한 학습에서는 성능이 떨어졌습니다.
 - 학교 과제로 RSME 측정 결과물 제출은 해봤지만, 대회에서는 처음이었습니다.
 - Metrics 기준이 `가격을 예측` 하는 것이기 때문에 단순 분류 모델이 아니라는 점이라 RSME를 이해하는 과정이라 생각하게 되었습니다.
 - 초기에 집값 예측 프로젝트를 봤을 때, 한숨부터 나왔습니다.
