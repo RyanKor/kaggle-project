@@ -4,7 +4,9 @@
 
 
 
-- Project Final Score : 0.94665
+![image](https://user-images.githubusercontent.com/40455392/147412809-a58d435e-1417-49e5-a92a-c5600072f503.png)
+
+- Project Final Score : 0.95203
 - 프로젝트 링크 : [link](https://www.kaggle.com/c/forest-cover-type-prediction/overview)
 - 제출 코드 링크 : [link](https://www.kaggle.com/seungtaekim/tps-lgbm-baseline)
 
@@ -111,13 +113,22 @@ class_weight={1: 0.389057751, 2: 0.252647748,
   ![image](https://user-images.githubusercontent.com/40455392/147399933-1d0fc89d-49a7-48e0-ad69-4074bf7b7794.png)
 
   
+
   - 높은 점수를 얻은 것 같지만, 아무런 매개 변수 조정 없이 이러한 점수를 얻었다는 것은 다른 사람들의 점수는 이미 월등하게 높을 것이라는 막연한 추측을 했고, 이 추측은 맞았습니다.
 
   ![image](https://user-images.githubusercontent.com/40455392/147399945-c2dce386-450c-48d8-b2b8-1d1f22cd2d74.png)
 
+  
+
   - 1000번 학습 결과 정확도 개선 결과
 
   ![image](https://user-images.githubusercontent.com/40455392/147407780-663851a3-5366-4151-a320-a68b5c4773f9.png)
+
+  
+
+  - 4000번 학습 결과 정확도 : 1등과 정확도가 0.521% 밖에 차이가 나지 않는다.
+
+  ![image](https://user-images.githubusercontent.com/40455392/147412809-a58d435e-1417-49e5-a92a-c5600072f503.png)
 
   - 첫 제출에서 이미 전체 참여자의 80% 정도 밖에 안되는 점수라는 것을 확인했고, 1등 점수를 보니 0.95724로 대부분의 점수가 3% 내외에서 결정된다는 것을 알게 되었습니다.
 
@@ -195,5 +206,8 @@ class_weight={1: 0.389057751, 2: 0.252647748,
 - 솔루션을 항상 딥러닝으로 제시하기 보다 머신러닝이라는 큰 틀 안에서 Data-Centric 관점에서 데이터 퀄리티를 높이거나 (Data Augmentation, Synthetic Data 등) 앙상블, 새로운 논문의 모델 성능을 테스트 해보는 등의 시도를 꾸준히 해봐야 합니다.
 - 수치에 속으면 안됩니다. 훈련 데이터 속 라벨링 데이터 중 5번 카테고리는 1개 밖에 없었고, 교차 검증 등으로 학습 시키기에는 데이터가 소외될 가능성이 너무 높았습니다.
   - 다양한 관점에서 데이터를 보기 위해 EDA를 여러 관점에서 시도해봐야합니다.
+- 최종 스코어는 0.95203 이지만, 1등 점수가 0.95724 이기 때문에 실제적으로 퍼센트로 따져봤을 때 0.521% 밖에 차이나지 않습니다.
+  - 대회 자체가 쉽다보니, 사소한 소숫점 차이로 많이 갈립니다.
+  - 소숫점에서 갈리다 보니, 점수 차이가 많이 안나는데도 상위 60% 정도밖에 되지 않는 것을 볼 수 있습니다.
 
 - 조금씩 자신감이 올라오고 있는 것이 느껴집니다 :)
