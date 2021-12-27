@@ -201,7 +201,7 @@ class_weight={1: 0.389057751, 2: 0.252647748,
   [3999]	valid_0's multi_logloss: 0.0966139
   [4000]	valid_0's multi_logloss: 0.0966106
   ...
-[6240]	valid_0's multi_logloss: 0.0944041
+  [6240]	valid_0's multi_logloss: 0.0944041
   [6241]	valid_0's multi_logloss: 0.0944034
   [6242]	valid_0's multi_logloss: 0.0944011
   [6243]	valid_0's multi_logloss: 0.0944018
