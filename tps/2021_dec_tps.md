@@ -4,9 +4,10 @@
 
 
 
-![image](https://user-images.githubusercontent.com/40455392/147412809-a58d435e-1417-49e5-a92a-c5600072f503.png)
+![image](https://user-images.githubusercontent.com/40455392/147431818-c6c9ed1f-c45e-47c6-8e19-c83a7f2ebc27.png)
 
-- Project Final Score : 0.95203
+- Project Final Score : 0.95281 (목표 스코어 달성, 0.95 넘기기)
+  - 0.00442 점을 어떻게 개선해야할지 유독 방법을 찾기 힘든 대회인 것 같습니다.
 - 프로젝트 링크 : [link](https://www.kaggle.com/c/forest-cover-type-prediction/overview)
 - 제출 코드 링크 : [link](https://www.kaggle.com/seungtaekim/tps-lgbm-baseline)
 
@@ -131,6 +132,9 @@ class_weight={1: 0.389057751, 2: 0.252647748,
   ![image](https://user-images.githubusercontent.com/40455392/147412809-a58d435e-1417-49e5-a92a-c5600072f503.png)
 
   - 첫 제출에서 이미 전체 참여자의 80% 정도 밖에 안되는 점수라는 것을 확인했고, 1등 점수를 보니 0.95724로 대부분의 점수가 3% 내외에서 결정된다는 것을 알게 되었습니다.
+  - 6249번 학습 결과 정확도 : 95.281% (4000번 때보다 0.00078점 개선)
+
+  ![image](https://user-images.githubusercontent.com/40455392/147431818-c6c9ed1f-c45e-47c6-8e19-c83a7f2ebc27.png)
 
 - 이후, LGBM의 기본 값에서 매개변수를 조정해 다시 학습을 수행했습니다.
 
@@ -138,7 +142,7 @@ class_weight={1: 0.389057751, 2: 0.252647748,
   from lightgbm import LGBMClassifier
   # lgbm1 -> default parameter of LGBM
   
-  lgb_params = {'n_estimators'     : 4000,      # Number of boosting iterations.
+  lgb_params = {'n_estimators'     : 10000,      # Number of boosting iterations. early stopped at 6249
                 'random_state'     : 42,            # Random seed initilizer for the model, helps to replicate the experiments.
                 'learning_rate'    : 0.1,              # The model learning rate.
                 'subsample'        : 0.95,            # Row subsample from the dataset, like feature_fraction, but this will randomly select part of data without resampling
@@ -204,10 +208,11 @@ class_weight={1: 0.389057751, 2: 0.252647748,
 
 - 데이콘의 심장 질환 예측하기, 집 값 예측하기 심화, 그리고 TPS 를 지난 3일 동안 연속으로 참여했고, 3개 모두 어느 정도 좋은 결과를 예측할 수 있었습니다.
 - 솔루션을 항상 딥러닝으로 제시하기 보다 머신러닝이라는 큰 틀 안에서 Data-Centric 관점에서 데이터 퀄리티를 높이거나 (Data Augmentation, Synthetic Data 등) 앙상블, 새로운 논문의 모델 성능을 테스트 해보는 등의 시도를 꾸준히 해봐야 합니다.
+  - 그런데 1 ~ 500등까지 점수가 모두 0.95 언저리인데다가, 소숫점 3번째 자리에서 등수가 갈리기 때문에 차이를 어떻게 더 만들 수 있을지 고민이 필요합니다.
+  - 이 차이면, 사실 하이퍼 파라미터를 아주 미세하게 조절하면 발생하는 차이 정도로 보이는데, TPS에서 이 간격을 찾는 것이 큰 의미를 갖지는 않다고 판단하고, 0.95281 을 획득했을 시점에 중단하기로 결정했습니다.
 - 수치에 속으면 안됩니다. 훈련 데이터 속 라벨링 데이터 중 5번 카테고리는 1개 밖에 없었고, 교차 검증 등으로 학습 시키기에는 데이터가 소외될 가능성이 너무 높았습니다.
   - 다양한 관점에서 데이터를 보기 위해 EDA를 여러 관점에서 시도해봐야합니다.
-- 최종 스코어는 0.95203 이지만, 1등 점수가 0.95724 이기 때문에 실제적으로 퍼센트로 따져봤을 때 0.521% 밖에 차이나지 않습니다.
+- 최종 스코어는 0.95281 이지만, 1등 점수가 0.95724 이기 때문에 실제적으로 퍼센트로 따져봤을 때 0.00442 밖에 차이나지 않습니다.
   - 대회 자체가 쉽다보니, 사소한 소숫점 차이로 많이 갈립니다.
-  - 소숫점에서 갈리다 보니, 점수 차이가 많이 안나는데도 상위 60% 정도밖에 되지 않는 것을 볼 수 있습니다.
-
+  - 소숫점에서 갈리다 보니, 점수 차이가 많이 안나는데도 상위 55% 정도밖에 되지 않는 것을 볼 수 있습니다.
 - 조금씩 자신감이 올라오고 있는 것이 느껴집니다 :)
